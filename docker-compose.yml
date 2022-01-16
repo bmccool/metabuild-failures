@@ -16,7 +16,7 @@ services:
         image: grafana/grafana:latest
         ports:
         - 3000:3000
-        user: "1000:1000"
+        #user: "1000:1000"
         volumes:
             - /mnt/docker/metabuild-failures/grafana/data:/var/lib/grafana
     influxdb:
