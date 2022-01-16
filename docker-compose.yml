@@ -1,0 +1,53 @@
+version: "3"
+services:
+    metricsweb:
+        container_name: metricsweb
+        build: .
+        ports:
+        - 5000:5000
+        depends_on:
+        - influxdb
+        volumes:
+            - /mnt/hgfs/CurrentFailures:/app/load_dir
+        environment:
+            - TZ=America/Fort_Wayne
+    grafana:
+        container_name: grafana
+        image: grafana/grafana:latest
+        ports:
+        - 3000:3000
+        user: "1000:1000"
+        volumes:
+            - ./grafana/data:/var/lib/grafana
+    influxdb:
+        container_name: influxdb
+        image: influxdb:latest
+        ports:
+        - 8086:8086
+        user: "1000:1000"
+        env_file:
+            - 'env.influxdb'
+        environment:
+            - TZ=America/Fort_Wayne
+        volumes:
+            - ./influxdb/data:/var/lib/influxdb
+    telegraf:
+        # 135 is the group id of the docker daemon From $(stat -c '%g' /var/run/docker.sock)
+        user: telegraf:135
+        container_name: telegraf
+        image: telegraf
+        container_name: telegraf
+        restart: always
+        depends_on:
+        - influxdb
+        environment:
+            HOST_PROC: /rootfs/proc
+            HOST_SYS: /rootfs/sys
+            HOST_ETC: /rootfs/etc
+            TZ: America/Fort_Wayne
+        volumes:
+            - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - /sys:/rootfs/sys:ro
+            - /proc:/rootfs/proc:ro
+            - /etc:/rootfs/etc:ro
