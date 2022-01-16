@@ -8,7 +8,7 @@ services:
         depends_on:
         - influxdb
         volumes:
-            - /mnt/hgfs/CurrentFailures:/app/load_dir
+            - /mnt/docker/metabuild-failures/html:/app/load_dir
         environment:
             - TZ=America/Fort_Wayne
     grafana:
@@ -18,7 +18,7 @@ services:
         - 3000:3000
         user: "1000:1000"
         volumes:
-            - ./grafana/data:/var/lib/grafana
+            - /mnt/docker/metabuild-failures/grafana/data:/var/lib/grafana
     influxdb:
         container_name: influxdb
         image: influxdb:latest
@@ -30,7 +30,7 @@ services:
         environment:
             - TZ=America/Fort_Wayne
         volumes:
-            - ./influxdb/data:/var/lib/influxdb
+            - /mnt/docker/metabuild-failures/influxdb/data:/var/lib/influxdb
     telegraf:
         # 135 is the group id of the docker daemon From $(stat -c '%g' /var/run/docker.sock)
         user: telegraf:135
