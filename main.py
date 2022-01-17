@@ -118,6 +118,9 @@ def get_category(columns):
             if "bt" in text.lower(): return ("transient", "bluetooth")
             if "bluetooth" in text.lower(): return ("transient", "bluetooth")
             return("transient", "TODO")
+        if "infrastructure" in text.lower():
+            if "node issue" in text.lower(): return("infrastructure", "node issue")
+            return("infrastructure", "TODO")
         if text == "": return ("TODO", "TODO")
         return (text, "NOT IMPL")
     except:
@@ -147,10 +150,12 @@ def get_component(columns):
         if "buttons" in text.lower(): return ("Buttons")
         if "led" in text.lower(): return ("LED")
         if "smart anr" in text.lower(): return ("Smart ANR")
+        if "smartanr" in text.lower(): return ("Smart ANR")
         if "spitfire update" in text.lower(): return ("Spitfire Update")
         if "manufacturing " in text.lower(): return ("Manufacturing ")
         if "smalls update" in text.lower(): return ("Smalls Update")
         if "sound management" in text.lower(): return ("Sound Management")
+        if "soundmanagement" in text.lower(): return ("Sound Management")        
         if "bmap" in text.lower(): return ("BMAP")
         if "e2e" in text.lower(): return ("E2E Test")
         if "dataharvesting" in text.lower(): return ("DataHarvesting")
@@ -160,9 +165,9 @@ def get_component(columns):
         if "sensor" in text.lower(): return ("Sensor")
         if "media player" in text.lower(): return ("Spitfire Media Player")
         if "testcomponent" in text.lower(): return ("Spitfire Test Component")
-        
-
-        
+        if "metabuild" in text.lower(): return ("metabuild")
+        if "stage2_component_runner" in text.lower(): return ("Stage2_Component_Runner")
+        if "stage3_product_runner" in text.lower(): return ("Stage3_Product_Runner")
 
         if text == "": return ("TODO")
     except:
